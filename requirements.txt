@@ -1,0 +1,5 @@
+tomli~=1.2.1
+pygubu~=0.13
+untangle~=1.1.1
+wget~=3.2
+pillow
