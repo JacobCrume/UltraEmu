@@ -64,31 +64,53 @@ elif theme == "sun-valley":
     root.tk.call("set_theme", theme_style)
 os.chdir("..")
 
-if theme_style == "light":
-    os.chdir("Images_Light")
-if theme_style == "dark":
-    os.chdir("Images_Dark")
+
+def Show_Back_Button():
+    Search_Frame.pack_forget()
+    Back_Button.pack(side='left', padx=5, pady=5)
+    Search_Frame.pack()
+
 
 def Hide_Back_Button():
-    print("Search_Text")
+    Back_Button.pack_forget()
 
+def Show_Search_Results():
+    Main_Content.pack_forget()
+    Search_Results_Frame.pack(expand='true', fill='both', side='right', padx="5 0")
+
+
+os.chdir('Images_Universal')
+Search_Icon = Image.open("Search.png")
+Search_Icon = Search_Icon.convert("RGBA")
 Button_Sizer = root.winfo_screenwidth() // 42
 Title_Bar = ttk.Frame(root)
 root.wm_attributes('-fullscreen','true')
 Close_Button = ttk.Button(Title_Bar, text="X", command=lambda: root.destroy(), width=2)
 Close_Button.pack(side='right', padx=5, pady=5)
 Back_Button = ttk.Button(Title_Bar, text='<-', width=2)
-Back_Button.pack(side='left', padx=5, pady=5)
+Back_Button.configure(command=Hide_Back_Button)
+Back_Button.pack_forget()
 Search_Frame = ttk.Frame(Title_Bar)
-Search_Frame.pack()
 Search_Text = ''
 Search_Box = ttk.Entry(Search_Frame, textvariable=Search_Text, width=40)
 Search_Box.pack(pady=5, padx='0 5', side='left')
-Search_Button = ttk.Button(Search_Frame, text='Search')
-Search_Button.pack(side='right')
+root.update()
+Search_Icon = Search_Icon.resize((15,15))
+Search_Icon = ImageTk.PhotoImage(Search_Icon)
+Search_Button = ttk.Button(Search_Frame, image=Search_Icon, width=15, command=Show_Back_Button and Show_Search_Results)
+Search_Button.pack(side='right', pady=5)
+Search_Frame.pack()
 Titlebar_Separator = ttk.Separator(Title_Bar, orient='horizontal')
 Titlebar_Separator.pack(side='bottom', fill='x')
 Title_Bar.pack(side="top", fill='x')
+os.chdir('..')
+
+Search_Results_Frame = ScrolledFrame(root, scrolltype='vertical')
+
+if theme_style == "light":
+    os.chdir("Images_Light")
+if theme_style == "dark":
+    os.chdir("Images_Dark")
 
 Download_Icon = Image.open("download.png")
 Download_Icon = Download_Icon.convert("RGBA")

@@ -1,7 +1,6 @@
 import untangle
-import tomli
 import os
-import wget
+import requests
 from config import *
 
 filename = []
@@ -21,7 +20,7 @@ def update_cache():
         print(url + "/" + filename[list_num])
         if os.path.exists(filename_internal + "_files.xml"):
             os.remove(filename_internal + "_files.xml")
-        wget.download(url + "/" + filename[list_num], filename_internal + "_files.xml")
+        requests.get(url + "/" + filename[list_num], filename_internal + "_files.xml")
 
     # XML parsing
     for repo_num in range(repos_len):
