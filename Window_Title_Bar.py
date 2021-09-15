@@ -69,14 +69,19 @@ def Show_Back_Button():
     Search_Frame.pack_forget()
     Back_Button.pack(side='left', padx=5, pady=5)
     Search_Frame.pack()
+    Main_Content.pack_forget()
+    Nav_Seperator.pack_forget()
+    Search_Results_Frame.pack(expand='true', fill='both', side='right', padx="5 0")
+    Nav_Seperator.pack(expand='true', fill='y', side='top')
 
 
 def Hide_Back_Button():
     Back_Button.pack_forget()
-
-def Show_Search_Results():
-    Main_Content.pack_forget()
-    Search_Results_Frame.pack(expand='true', fill='both', side='right', padx="5 0")
+    Search_Results_Frame.pack_forget()
+    Nav_Seperator.pack_forget()
+    Main_Content.pack(expand='true', fill='both', side='right', padx="5 0")
+    Nav_Seperator.pack(expand='true', fill='y', side='top')
+    Search_Box.delete(0, tk.END)
 
 
 os.chdir('Images_Universal')
@@ -97,7 +102,7 @@ Search_Box.pack(pady=5, padx='0 5', side='left')
 root.update()
 Search_Icon = Search_Icon.resize((15,15))
 Search_Icon = ImageTk.PhotoImage(Search_Icon)
-Search_Button = ttk.Button(Search_Frame, image=Search_Icon, width=15, command=Show_Back_Button and Show_Search_Results)
+Search_Button = ttk.Button(Search_Frame, image=Search_Icon, width=15, command=Show_Back_Button)
 Search_Button.pack(side='right', pady=5)
 Search_Frame.pack()
 Titlebar_Separator = ttk.Separator(Title_Bar, orient='horizontal')
@@ -429,54 +434,54 @@ Simulator_Games_Button_24 = ttk.Button(Simulator_Games_Content.innerframe, text=
                                        image=Simulator_Games_Button_24_Icon, compound='top')
 Simulator_Games_Button_24.pack(side='left', padx='0 5', pady=10, fill='y')
 
-if len(Simulator_Games_Button_1['text']) >= 14:
-    Simulator_Games_Button_1['text'] = Simulator_Games_Button_1['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_2['text']) >= 14:
-    Simulator_Games_Button_2['text'] = Simulator_Games_Button_2['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_3['text']) >= 14:
-    Simulator_Games_Button_3['text'] = Simulator_Games_Button_3['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_4['text']) >= 14:
-    Simulator_Games_Button_4['text'] = Simulator_Games_Button_4['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_5['text']) >= 14:
-    Simulator_Games_Button_5['text'] = Simulator_Games_Button_5['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_6['text']) >= 14:
-    Simulator_Games_Button_6['text'] = Simulator_Games_Button_6['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_7['text']) >= 14:
-    Simulator_Games_Button_7['text'] = Simulator_Games_Button_7['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_8['text']) >= 14:
-    Simulator_Games_Button_8['text'] = Simulator_Games_Button_8['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_9['text']) >= 14:
-    Simulator_Games_Button_9['text'] = Simulator_Games_Button_9['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_10['text']) >= 14:
-    Simulator_Games_Button_10['text'] = Simulator_Games_Button_10['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_11['text']) >= 14:
-    Simulator_Games_Button_11['text'] = Simulator_Games_Button_11['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_12['text']) >= 14:
-    Simulator_Games_Button_12['text'] = Simulator_Games_Button_12['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_13['text']) >= 14:
-    Simulator_Games_Button_13['text'] = Simulator_Games_Button_13['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_14['text']) >= 14:
-    Simulator_Games_Button_14['text'] = Simulator_Games_Button_14['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_15['text']) >= 14:
-    Simulator_Games_Button_15['text'] = Simulator_Games_Button_15['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_16['text']) >= 14:
-    Simulator_Games_Button_16['text'] = Simulator_Games_Button_16['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_17['text']) >= 14:
-    Simulator_Games_Button_17['text'] = Simulator_Games_Button_17['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_18['text']) >= 14:
-    Simulator_Games_Button_18['text'] = Simulator_Games_Button_18['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_19['text']) >= 14:
-    Simulator_Games_Button_19['text'] = Simulator_Games_Button_19['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_20['text']) >= 14:
-    Simulator_Games_Button_20['text'] = Simulator_Games_Button_20['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_21['text']) >= 14:
-    Simulator_Games_Button_21['text'] = Simulator_Games_Button_21['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_22['text']) >= 14:
-    Simulator_Games_Button_22['text'] = Simulator_Games_Button_22['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_23['text']) >= 14:
-    Simulator_Games_Button_23['text'] = Simulator_Games_Button_23['text'][0:13] + ' ...'
-if len(Simulator_Games_Button_24['text']) >= 14:
-    Simulator_Games_Button_24['text'] = Simulator_Games_Button_24['text'][0:13] + ' ...'
+if len(Simulator_Games_Button_1['text']) >= 15:
+    Simulator_Games_Button_1['text'] = Simulator_Games_Button_1['text'][0:13] + '...'
+if len(Simulator_Games_Button_2['text']) >= 15:
+    Simulator_Games_Button_2['text'] = Simulator_Games_Button_2['text'][0:13] + '...'
+if len(Simulator_Games_Button_3['text']) >= 15:
+    Simulator_Games_Button_3['text'] = Simulator_Games_Button_3['text'][0:13] + '...'
+if len(Simulator_Games_Button_4['text']) >= 15:
+    Simulator_Games_Button_4['text'] = Simulator_Games_Button_4['text'][0:13] + '...'
+if len(Simulator_Games_Button_5['text']) >= 15:
+    Simulator_Games_Button_5['text'] = Simulator_Games_Button_5['text'][0:13] + '...'
+if len(Simulator_Games_Button_6['text']) >= 15:
+    Simulator_Games_Button_6['text'] = Simulator_Games_Button_6['text'][0:13] + '...'
+if len(Simulator_Games_Button_7['text']) >= 15:
+    Simulator_Games_Button_7['text'] = Simulator_Games_Button_7['text'][0:13] + '...'
+if len(Simulator_Games_Button_8['text']) >= 15:
+    Simulator_Games_Button_8['text'] = Simulator_Games_Button_8['text'][0:13] + '...'
+if len(Simulator_Games_Button_9['text']) >= 15:
+    Simulator_Games_Button_9['text'] = Simulator_Games_Button_9['text'][0:13] + '...'
+if len(Simulator_Games_Button_10['text']) >= 15:
+    Simulator_Games_Button_10['text'] = Simulator_Games_Button_10['text'][0:13] + '...'
+if len(Simulator_Games_Button_11['text']) >= 15:
+    Simulator_Games_Button_11['text'] = Simulator_Games_Button_11['text'][0:13] + '...'
+if len(Simulator_Games_Button_12['text']) >= 15:
+    Simulator_Games_Button_12['text'] = Simulator_Games_Button_12['text'][0:13] + '...'
+if len(Simulator_Games_Button_13['text']) >= 15:
+    Simulator_Games_Button_13['text'] = Simulator_Games_Button_13['text'][0:13] + '...'
+if len(Simulator_Games_Button_14['text']) >= 15:
+    Simulator_Games_Button_14['text'] = Simulator_Games_Button_14['text'][0:13] + '...'
+if len(Simulator_Games_Button_15['text']) >= 15:
+    Simulator_Games_Button_15['text'] = Simulator_Games_Button_15['text'][0:13] + '...'
+if len(Simulator_Games_Button_16['text']) >= 15:
+    Simulator_Games_Button_16['text'] = Simulator_Games_Button_16['text'][0:13] + '...'
+if len(Simulator_Games_Button_17['text']) >= 15:
+    Simulator_Games_Button_17['text'] = Simulator_Games_Button_17['text'][0:13] + '...'
+if len(Simulator_Games_Button_18['text']) >= 15:
+    Simulator_Games_Button_18['text'] = Simulator_Games_Button_18['text'][0:13] + '...'
+if len(Simulator_Games_Button_19['text']) >= 15:
+    Simulator_Games_Button_19['text'] = Simulator_Games_Button_19['text'][0:13] + '...'
+if len(Simulator_Games_Button_20['text']) >= 15:
+    Simulator_Games_Button_20['text'] = Simulator_Games_Button_20['text'][0:13] + '...'
+if len(Simulator_Games_Button_21['text']) >= 15:
+    Simulator_Games_Button_21['text'] = Simulator_Games_Button_21['text'][0:13] + '...'
+if len(Simulator_Games_Button_22['text']) >= 15:
+    Simulator_Games_Button_22['text'] = Simulator_Games_Button_22['text'][0:13] + '...'
+if len(Simulator_Games_Button_23['text']) >= 15:
+    Simulator_Games_Button_23['text'] = Simulator_Games_Button_23['text'][0:13] + '...'
+if len(Simulator_Games_Button_24['text']) >= 15:
+    Simulator_Games_Button_24['text'] = Simulator_Games_Button_24['text'][0:13] + '...'
 
 Simulator_Games_Content.configure(usemousewheel=False)
 Simulator_Games_Content.pack(fill='x', side='top')
