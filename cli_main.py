@@ -38,9 +38,11 @@ def update_cache():
     f = open("Filelist_Local.list", "wb")
     pickle.dump(filelist_final, f)
     f.close()
+    os.chdir("..")
 
 def update_cache_local():
     global filelist_final
     os.chdir("Game_Info")
     f = open("Filelist_Local.list", "rb")
     filelist_final = pickle.load(f)
+    os.chdir("..")

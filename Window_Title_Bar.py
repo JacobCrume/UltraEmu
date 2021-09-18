@@ -6,6 +6,7 @@ from config import *
 import cli_main
 from PIL import ImageTk, Image
 from pygubu.widgets.scrolledframe import ScrolledFrame
+import Metacritic_API
 
 
 class Grip:
@@ -73,7 +74,9 @@ def Show_Back_Button():
     Nav_Seperator.pack_forget()
     Search_Results_Frame.pack(expand='true', fill='both', side='right', padx="5 0")
     Nav_Seperator.pack(expand='true', fill='y', side='top')
-
+    os.chdir("..")
+    print(Metacritic_API.Search_MetaCritic(Search_Text.get(), 'ps3'))
+    os.chdir("Images_Universal")
 
 def Hide_Back_Button():
     Back_Button.pack_forget()
@@ -96,7 +99,7 @@ Back_Button = ttk.Button(Title_Bar, text='<-', width=2)
 Back_Button.configure(command=Hide_Back_Button)
 Back_Button.pack_forget()
 Search_Frame = ttk.Frame(Title_Bar)
-Search_Text = ''
+Search_Text = tk.StringVar()
 Search_Box = ttk.Entry(Search_Frame, textvariable=Search_Text, width=40)
 Search_Box.pack(pady=5, padx='0 5', side='left')
 root.update()
