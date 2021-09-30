@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-import Custom_Widgets
 import os
 from config import *
 import cli_main
@@ -48,7 +47,6 @@ class Grip:
         if self.releaseCMD != None:
             self.releaseCMD()
 
-
 root = tk.Tk()
 os.chdir("Themes")
 if theme == "forest":
@@ -67,20 +65,52 @@ os.chdir("..")
 
 
 def Show_Back_Button():
-    Search_Frame.pack_forget()
-    Back_Button.pack(side='left', padx=5, pady=5)
-    Search_Frame.pack()
-    Main_Content.pack_forget()
-    Nav_Seperator.pack_forget()
-    Search_Results_Frame.pack(expand='true', fill='both', side='right', padx="5 0")
-    Nav_Seperator.pack(expand='true', fill='y', side='top')
-    os.chdir("..")
-    print(Metacritic_API.Search_MetaCritic(Search_Text.get(), 'ps3'))
-    os.chdir("Images_Universal")
+    Search_Results = Metacritic_API.Search_MetaCritic(Search_Text.get(), 'ps3')
+    Search_Results_Keys = Search_Results[1]
+    Search_Results = Search_Results[0]
+    if len(Search_Results) > 0:
+        for child in Search_Results_Frame.winfo_children():
+            child.destroy()
+        Search_Frame.pack_forget()
+        Back_Button.pack(side='left', padx=5, pady=5)
+        Search_Frame.pack()
+        Main_Content.pack_forget()
+        os.chdir("..")
+        Search_Results_Entries = []
+        for i in range(0, len(Search_Results), 2):
+            Search_Results_Entries.append(ttk.Frame(Search_Results_Frame))
+            Search_Results_Entries[i].pack(side='top', fill="x")
+            Search_Results_Entries.append(ttk.Label(Search_Results_Entries[i], text=Search_Results_Keys[i]))
+            Search_Results_Entries[i + 1].pack(side='left', pady="5 0")
+        Search_Results_Frame.pack(expand=True, fill='both', side='top')
+        Search_Results_Nav_Frame.pack(expand=True, fill='both', side='bottom')
+        Search_Results_Holder.pack(expand=True, fill='both', side='right')
+        Nav_Seperator.pack_forget()
+        Nav_Seperator.pack(expand='true', fill='y', side='top')
+
+    else:
+        for child in Search_Results_Frame.winfo_children():
+            child.destroy()
+        Search_Frame.pack_forget()
+        Back_Button.pack(side='left', padx=5, pady=5)
+        Search_Frame.pack()
+        Main_Content.pack_forget()
+        os.chdir("..")
+        Search_Results_Entries = []
+        Search_Results_Entries.append(ttk.Frame(Search_Results_Frame))
+        Search_Results_Entries[0].pack(side='top', fill="x")
+        Search_Results_Entries.append(ttk.Label(Search_Results_Entries[0], text="No Results Found :("))
+        Search_Results_Entries[1].pack(side='left', pady="5 0")
+        Search_Results_Frame.pack(expand=True, fill='both', side='top')
+        Search_Results_Nav_Frame.pack(expand=True, fill='both', side='bottom')
+        Search_Results_Holder.pack(expand=True, fill='both', side='right')
+        Nav_Seperator.pack_forget()
+        Nav_Seperator.pack(expand='true', fill='y', side='top')
+
 
 def Hide_Back_Button():
     Back_Button.pack_forget()
-    Search_Results_Frame.pack_forget()
+    Search_Results_Holder.pack_forget()
     Nav_Seperator.pack_forget()
     Main_Content.pack(expand='true', fill='both', side='right', padx="5 0")
     Nav_Seperator.pack(expand='true', fill='y', side='top')
@@ -113,7 +143,9 @@ Titlebar_Separator.pack(side='bottom', fill='x')
 Title_Bar.pack(side="top", fill='x')
 os.chdir('..')
 
-Search_Results_Frame = ScrolledFrame(root, scrolltype='vertical')
+Search_Results_Holder = ttk.Frame(root)
+Search_Results_Frame = ttk.Frame(Search_Results_Holder)
+Search_Results_Nav_Frame = ttk.Frame(Search_Results_Holder)
 
 if theme_style == "light":
     os.chdir("Images_Light")

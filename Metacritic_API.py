@@ -65,8 +65,7 @@ def Search_MetaCritic(Search_Term, platform):
         sys.exit()
 
     url = 'https://www.metacritic.com/search/game/' + Search_Term + '/results?search_type=advanced&plats[' + platform +']=1'
-    os.chdir('Game_Info')
-    os.chdir('HTML')
+    os.chdir('D:/Python Projects/UltraEmu/Game_Info/HTML ')
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
     File = requests.get(url, headers=headers)
@@ -77,30 +76,34 @@ def Search_MetaCritic(Search_Term, platform):
     parse = BeautifulSoup(File, 'html.parser')
 
     Search_Results_Keys = []
-    for i in range(len(parse.select("ul.search_results")[0].findAll('a'))):
-        Search_Results_Keys.append(parse.select("ul.search_results")[0].findAll('a')[i].get_text().strip())
+    if not len(parse.select("ul.search_results")) == 0:
+        for i in range(len(parse.select("ul.search_results")[0].findAll('a'))):
+            Search_Results_Keys.append(parse.select("ul.search_results")[0].findAll('a')[i].get_text().strip())
 
-    # Remove all the useless images
-    Bad_Images_List = []
-    for i in range(len(parse.select("ul.search_results")[0].findAll('img'))):
-        if parse.select("ul.search_results")[0].findAll('img')[i]['src'] == '/images/icons/mc-mustplay-sm.svg':
-            Bad_Images_List.append(i)
-    for i in range(len(Bad_Images_List)):
-        parse.select("ul.search_results")[0].findAll('img')[Bad_Images_List[i] - i].decompose()
+        # Remove all the useless images
+        Bad_Images_List = []
+        for i in range(len(parse.select("ul.search_results")[0].findAll('img'))):
+            if parse.select("ul.search_results")[0].findAll('img')[i]['src'] == '/images/icons/mc-mustplay-sm.svg':
+                Bad_Images_List.append(i)
+        for i in range(len(Bad_Images_List)):
+            parse.select("ul.search_results")[0].findAll('img')[Bad_Images_List[i] - i].decompose()
 
-    # Match images with text
-    Search_Results = {}
-    for i in range(len(parse.select("ul.search_results")[0].findAll('img'))):
-        Image_Name = parse.select("ul.search_results")[0].findAll('img')[i]['alt'].rpartition(" ")[0]
-        Image_URL =  parse.select("ul.search_results")[0].findAll('img')[i]['src']
-        Search_Results[Image_Name] = [Image_URL]
+        # Match images with text
+        Search_Results = {}
+        for i in range(len(parse.select("ul.search_results")[0].findAll('img'))):
+            Image_Name = parse.select("ul.search_results")[0].findAll('img')[i]['alt'].rpartition(" ")[0]
+            Image_URL =  parse.select("ul.search_results")[0].findAll('img')[i]['src']
+            Search_Results[Image_Name] = [Image_URL]
 
-    for i in range(len(Search_Results)):
-        Search_Results[Search_Results_Keys[i]].append(Search_Results_Keys[i].replace(":", " -"))
+        for i in range(len(Search_Results)):
+            Search_Results[Search_Results_Keys[i]].append(Search_Results_Keys[i].replace(":", " -"))
 
-    for i in range(len(parse.select("ul.search_results")[0].findAll('a'))):
-        Search_Results[Search_Results_Keys[i]].append("https://metacritic.com" + parse.select("ul.search_results")[0].findAll('a')[i]["href"].strip())
+        for i in range(len(parse.select("ul.search_results")[0].findAll('a'))):
+            Search_Results[Search_Results_Keys[i]].append("https://metacritic.com" + parse.select("ul.search_results")[0].findAll('a')[i]["href"].strip())
 
-    os.chdir("..")
-    os.chdir("..")
-    return  Search_Results
+        os.chdir("..")
+        os.chdir("..")
+        return [Search_Results, Search_Results_Keys]
+
+    else:
+        return ["", ""]
