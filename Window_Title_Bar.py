@@ -6,6 +6,7 @@ import cli_main
 from PIL import ImageTk, Image
 from pygubu.widgets.scrolledframe import ScrolledFrame
 import Metacritic_API
+import wget
 
 
 class Grip:
@@ -49,18 +50,20 @@ class Grip:
 
 root = tk.Tk()
 os.chdir("Themes")
+style = ttk.Style(root)
 if theme == "forest":
     root.tk.call("source", "forest-" + theme_style + ".tcl")
-    ttk.Style(root).theme_use('forest-' + theme_style)
+    style.theme_use('forest-' + theme_style)
 elif theme == "azure":
     root.tk.call("source", "azure-" + theme_style + ".tcl")
     if theme_style == "dark":
-        ttk.Style(root).theme_use('azure-' + theme_style)
+        style.theme_use('azure-' + theme_style)
     else:
-        ttk.Style(root).theme_use('azure')
+        style.theme_use('azure')
 elif theme == "sun-valley":
     root.tk.call("source", "sun-valley.tcl")
     root.tk.call("set_theme", theme_style)
+style.configure('Left.TButton', anchor='w')
 os.chdir("..")
 
 
@@ -75,18 +78,32 @@ def Show_Back_Button():
         Back_Button.pack(side='left', padx=5, pady=5)
         Search_Frame.pack()
         Main_Content.pack_forget()
-        os.chdir("..")
         Search_Results_Entries = []
+        Search_Results_Icons = []
+        os.chdir("Game_Info")
+        os.chdir("Images")
+        listdir = os.listdir()
+        for i in range(len(os.listdir())):
+            os.remove(listdir[i])
+        for i in range(len(Search_Results_Keys)):
+            wget.download(Search_Results[Search_Results_Keys[i]][0], out=Search_Results[Search_Results_Keys[i]][0].split("/")[-1])
+        for i in range(len(Search_Results_Keys)):
+            Search_Results_Icons.append(Image.open(Search_Results[Search_Results_Keys[i]][0].split("/")[-1]))
+            Search_Results_Icons[i] = Search_Results_Icons[i].convert("RGBA")
+            Search_Results_Icons[i] = ImageTk.PhotoImage(Search_Results_Icons[i])
         for i in range(0, len(Search_Results), 2):
             Search_Results_Entries.append(ttk.Frame(Search_Results_Frame))
-            Search_Results_Entries[i].pack(side='top', fill="x")
-            Search_Results_Entries.append(ttk.Label(Search_Results_Entries[i], text=Search_Results_Keys[i]))
-            Search_Results_Entries[i + 1].pack(side='left', pady="5 0")
+            Search_Results_Entries[i].pack(side='top', fill="x", padx=5)
+            Search_Results_Entries.append(ttk.Button(Search_Results_Entries[i], text=Search_Results_Keys[i], image=Search_Results_Icons[int(i / 2)], compound="left", style="Left.TButton"))
+            Search_Results_Entries[i + 1].photo = Search_Results_Icons[int(i / 2)]
+            Search_Results_Entries[i + 1].pack(side='left', pady="5 0", fill="x", expand=True, anchor="w")
         Search_Results_Frame.pack(expand=True, fill='both', side='top')
         Search_Results_Nav_Frame.pack(expand=True, fill='both', side='bottom')
         Search_Results_Holder.pack(expand=True, fill='both', side='right')
         Nav_Seperator.pack_forget()
         Nav_Seperator.pack(expand='true', fill='y', side='top')
+        os.chdir("..")
+        os.chdir("..")
 
     else:
         for child in Search_Results_Frame.winfo_children():

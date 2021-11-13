@@ -107,3 +107,7 @@ def Search_MetaCritic(Search_Term, platform):
 
     else:
         return ["", ""]
+
+if __name__ == "__main__":
+    search_results = Search_MetaCritic("", "ps3")
+    print(search_results[0])
