@@ -95,19 +95,28 @@ def Search_MetaCritic(Search_Term, platform):
             Image_URL =  parse.select("ul.search_results")[0].findAll('img')[i]['src']
             Search_Results[Image_Name] = [Image_URL]
 
+        Search_Results_To_Remove = []
+        FileList = cli_main.filelist_final
         for i in range(len(Search_Results)):
             Search_Results[Search_Results_Keys[i]].append(Search_Results_Keys[i].replace(":", " -"))
+            if not Search_Results_Keys[i].replace(":", " -") in FileList:
+                Search_Results_To_Remove.append(Search_Results_Keys[i])
 
         for i in range(len(parse.select("ul.search_results")[0].findAll('a'))):
             Search_Results[Search_Results_Keys[i]].append("https://metacritic.com" + parse.select("ul.search_results")[0].findAll('a')[i]["href"].strip())
 
         os.chdir("..")
         os.chdir("..")
+        for i in range(len(Search_Results_To_Remove)):
+            Key_To_Remove = Search_Results_Keys.index(Search_Results_To_Remove[i])
+            Search_Results_Keys.pop(Key_To_Remove)
+        for i in range(len(Search_Results_To_Remove)):
+            Search_Results.pop(Search_Results_To_Remove[i])
         return [Search_Results, Search_Results_Keys]
 
     else:
         return ["", ""]
 
 if __name__ == "__main__":
-    search_results = Search_MetaCritic("", "ps3")
-    print(search_results[0])
+    search_results = Search_MetaCritic("battleship", "ps3")
+    print(search_results)

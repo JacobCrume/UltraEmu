@@ -66,7 +66,6 @@ elif theme == "sun-valley":
 style.configure('Left.TButton', anchor='w')
 os.chdir("..")
 
-
 def Show_Back_Button():
     Search_Results = Metacritic_API.Search_MetaCritic(Search_Text.get(), 'ps3')
     Search_Results_Keys = Search_Results[1]
@@ -91,10 +90,10 @@ def Show_Back_Button():
             Search_Results_Icons.append(Image.open(Search_Results[Search_Results_Keys[i]][0].split("/")[-1]))
             Search_Results_Icons[i] = Search_Results_Icons[i].convert("RGBA")
             Search_Results_Icons[i] = ImageTk.PhotoImage(Search_Results_Icons[i])
-        for i in range(0, len(Search_Results), 2):
+        for i in range(0, len(Search_Results) * 2, 2):
             Search_Results_Entries.append(ttk.Frame(Search_Results_Frame))
             Search_Results_Entries[i].pack(side='top', fill="x", padx=5)
-            Search_Results_Entries.append(ttk.Button(Search_Results_Entries[i], text=Search_Results_Keys[i], image=Search_Results_Icons[int(i / 2)], compound="left", style="Left.TButton"))
+            Search_Results_Entries.append(ttk.Button(Search_Results_Entries[i], text=Search_Results_Keys[int(i / 2)], image=Search_Results_Icons[int(i / 2)], compound="left", style="Left.TButton"))
             Search_Results_Entries[i + 1].photo = Search_Results_Icons[int(i / 2)]
             Search_Results_Entries[i + 1].pack(side='left', pady="5 0", fill="x", expand=True, anchor="w")
         Search_Results_Frame.pack(expand=True, fill='both', side='top')
